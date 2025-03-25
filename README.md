@@ -17,3 +17,19 @@
 - Docker
 - Docker Compose
 - Node.js 20+
+
+# Getting Started
+
+## Prerequisites
+- Docker
+- Docker Compose
+
+## Installation
+1. Clone the repository
+2. Run `docker-compose up --build` from the project root
+
+## Architecture
+- Monorepo structure with backend and frontend packages
+- GraphQL API for communication
+- JWT-based authentication
+- Zustand for frontend state management

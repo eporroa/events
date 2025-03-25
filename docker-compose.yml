@@ -1,0 +1,42 @@
+services:
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  events-frontend:
+    build:
+      context: .
+      target: events-frontend
+    image: events-frontend:latest
+    ports:
+      - "3000:3000"
+    depends_on:
+      - events-backend
+    volumes:
+      - ./apps/events-frontend:/app
+      - /app/node_modules
+
+  events-backend:
+    build:
+      context: .
+      target: events-backend
+    image: events-backend:latest
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/eventplatform
+      - JWT_SECRET=h3ll0w0rld$$
+    ports:
+      - "4000:4000"
+    depends_on:
+      - mongodb
+    volumes:
+      - ./apps/events-backend:/app
+      - /app/node_modules
+
+volumes:
+  mongodb_data:
